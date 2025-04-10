@@ -1,0 +1,234 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+html {
+  background-color: rgb(166, 194, 218);
+}
+
+nav {
+  background-color: rgb(159, 223, 223);
+  padding: 1rem 0;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-around;  
+}
+
+
+
+main {
+  display: flex;
+  justify-content: center;
+  justify-self: center;
+  flex-wrap: wrap;
+  width: 50%;
+  background-color: rgb(121, 162, 201);
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 1rem;
+}
+
+h1 {
+  width: 100%;
+  text-align: center;
+}
+
+form {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+}
+
+.formBlock {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+input {
+  appearance: none;
+  border: 1px solid black;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  margin: 0.5rem;
+  text-align: center;
+}
+
+
+input:hover{
+  cursor: pointer;
+}
+
+.boxes {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+
+
+.boxes input {
+  border-radius: 0;
+  background-color: white;
+}
+
+.boxes input:checked {
+  background-color: rgb(117, 206, 154);
+}
+
+button {
+  appearance: none;
+  border: 1px solid black;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  margin: 0.5rem;
+  background-color: rgb(121, 173, 177);
+
+}
+
+button:hover {
+  background-color: rgb(103, 206, 167);
+  cursor: pointer;
+}
+
+.results {
+  visibility: hidden;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  
+  /* TODO: 
+  visibility: hidden; */
+}
+
+.resultsEntry { 
+  display: flex;
+  align-items: center;
+  border: 1px solid black;
+  background-color: rgb(144, 191, 223);
+  padding: 1rem;
+  margin: 0.5rem;
+  border-radius: 5px;
+}
+
+#popup {
+  visibility: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#popupContent {
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(171, 206, 219);
+  padding: 1rem;
+  border-radius: 1rem;
+}
+
+#popupButtons {
+  text-align: center;
+  padding-top: 1rem;
+}
+
+#popupClose {
+  background-color: rgb(171, 206, 219);
+  border: none;
+  justify-self: end;
+  align-self: flex-end;
+  margin-bottom: 1rem;
+}
+
+#popupClose:hover {
+  background-color: rgb(121, 173, 177);
+  cursor: pointer;
+}
+
+#successMessage {
+  visibility: hidden;
+  background-color: rgb(122, 219, 226);
+  width: 80%;
+  text-align: center;
+  padding: 1rem;
+  border-radius: 1rem;
+  position: sticky;
+  margin: 1rem;
+}
+
+footer {
+  text-align: center;
+  padding: 1rem;
+}
+
+
+
+
+
+
+
+#calendar {
+  display: flex;
+  justify-content: space-around;
+  align-items: start;
+  flex-direction: column;
+  height: 50vh;
+  width: 50%;
+  background-color: rgb(121, 150, 177);
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+#weekdays {
+  display: flex;
+  justify-content: space-around;
+  align-items: start;
+  width: 100%;
+  height: 10%;
+  background-color: rgb(121, 150, 177);
+}
+
+#calendarDays {
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  flex-wrap: wrap;
+  width: 100%;
+  height: 90%;
+  background-color: rgb(121, 150, 177);
+}
+
+#calendarDays div {
+  width: 14%;
+  height: 14%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(121, 162, 201);
+  border: 1px solid black;
+}
+
+#calendarDays div p {
+  align-self: flex-start;
+  justify-self: flex-start;
+  width: 100%;
+}
+
+#calendarDays div span {
+  align-self: center;
+  justify-self: center;
+}

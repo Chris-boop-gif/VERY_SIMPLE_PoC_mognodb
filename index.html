@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <title>VERY.SIMPLE</title>
+       <link rel="stylesheet" href="./style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <header>
+<!--         // Spotify API PoC -->
+        <nav>
+            <!-- Navigation -->
+            <p><a href="index.html">Home</a></p>
+            <p><a href="spotify.html">Spotify</a></p>
+        </nav>
+    </header>
+
+    <main>
+        <h1>POST</h1>
+        <!-- Formular -->
+        <form method="POST" id="offerForm">
+            <!-- Name -->
+            <div class="formBlock">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <!-- Submit button -->
+            <button type="submit">Speichern</button>
+        </form>
+
+        <h1>GET</h1>
+        <!-- Formular -->
+        <form method="GET" id="getForm">
+            <!-- Name -->
+            <div class="formBlock">
+                <label for="id">Name</label>
+                <input type="text" id="id" name="id" required>
+            </div>
+
+
+            <!-- Submit button -->
+            <button type="submit">Suchen</button>
+        </form>
+        <div id="result"></div>
+    </main>
+    <!-- Footer -->
+    <footer>
+
+    </footer>
+
+    <script>
+        document.getElementById("offerForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const name = document.getElementById("name").value;
+
+            fetch("http://localhost:3000/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ name }),
+            })
+                .then((response) => response.text())
+                .then((data) => console.log(data))
+                .catch((error) => console.error("Error:", error));
+        });
+
+        document.getElementById("getForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const id = document.getElementById("id").value;
+
+            fetch(`http://localhost:3000/id?id=${id}`, {
+                method: "GET"
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    document.getElementById("result").innerHTML = `
+                    <p>Name: ${data.name}</p>`;  
+                })
+                .catch((error) => console.error("Error:", error));
+        }) 
+    </script>
+
+</body>
+
+</html>

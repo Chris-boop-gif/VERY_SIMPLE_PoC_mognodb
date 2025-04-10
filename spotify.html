@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <title>VERY.SIMPLE</title>
+    <link rel="stylesheet" href="./style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <header>
+        <!--         // Spotify API PoC -->
+        <nav>
+            <!-- Navigation -->
+            <p><a href="index.html">Home</a></p>
+            <p><a href="spotify.html">Spotify</a></p>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Spotify API</h1>
+
+        <!-- Access Token Button -->
+        <div>
+            <button type="button" id="tokenButton">Request Access Token</button>
+        </div>
+
+
+        <!-- Artist ID Form -->
+        <div>
+            <form id="artistIdForm">
+                <label for="artistId">Artist ID</label>
+                <input type="text" id="artistId" name="artistId" required>
+
+
+                <button type="submit">Search</button>
+            </form>
+        </div>
+
+        <!-- Artist Name Form -->
+        <div>
+            <form id="artistSearchForm">
+                <label for="artistName">Artist Name</label>
+                <input type="text" id="artistName" name="artistName" required>
+
+
+                <button type="submit">Search</button>
+            </form>
+        </div>
+
+        <!-- Recommendations by Artist Name Form -->
+        <div>
+            <form id="recommendationsByArtistForm">
+                <label for="recommendationsArtistName">Get Recommendations by Artist Name</label>
+                <input type="text" id="recommendationsArtistName" name="recommendationsArtistName" required>
+
+                <button type="submit">Search</button>
+            </form>
+        </div>
+
+        <!-- Results -->
+        <div class="results">
+            <h2>Suchresultate</h2>
+            <div class="resultsEntry">
+            </div>
+        </div>
+    </main>
+    <footer>
+
+    </footer>
+
+    <script>
+        let fetchedData = null;
+        let accessToken = "BQD6wmk9jiQ0IibUfeZfyi60uM9BZwEtHhQlEVGo3JixDMcKylNdw4KKFVagZqlLdQhi6_RzD-f6HqWZ-7bnyMnyoaoVsu4vd9S5UyqtffZQASU6y2fIfYuN2nhgJ0VH8UzQfOlifpE"        // Get Artist infos by artist ID
+        let artistId = "";
+
+        // Get Artist infos by ID
+        document.getElementById("artistIdForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            let artistID = document.getElementById("artistId").value;
+            artistID = artistID.replace("https://open.spotify.com/artist/", "");
+
+            // Make results visible
+            document.querySelector(".results").style.visibility = "visible";
+
+            fetch("https://api.spotify.com/v1/artists/" + artistID, {
+                headers: { "Authorization": "Bearer  " + accessToken }
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    // Store the fetched data in the variable
+                    fetchedData = data;
+                    console.log(fetchedData);
+                    displayArtist();
+                })
+        })
+
+        // Get Artist infos by search
+        document.getElementById("artistSearchForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            let artistName = document.getElementById("artistName").value;
+
+            // Make results visible
+            document.querySelector(".results").style.visibility = "visible";
+
+            fetch(`https://api.spotify.com/v1/search?q=${artistName}&type=artist`, {
+                method: "GET",
+                headers: { "Authorization": "Bearer  " + accessToken }
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    // Store the fetched data in the variable
+                    fetchedData = data.artists.items[0];
+                    console.log(fetchedData);
+                    displayArtist();
+                })
+        })
+
+        // Get Recommendations by Artist Name
+        document.getElementById("recommendationsByArtistForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            let artistName = document.getElementById("recommendationsArtistName").value;
+
+            // Make results visible
+            document.querySelector(".results").style.visibility = "visible";
+
+            fetch(`https://api.spotify.com/v1/search?q=${artistName}&type=artist`, {
+                method: "GET",
+                headers: { "Authorization": "Bearer  " + accessToken }
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    // Store the fetched data in the variable
+                    fetchedData = data.artists.items[0];
+                    console.log(fetchedData);
+                    artistId = fetchedData.id;
+                    console.log(artistId);
+                })
+
+            fetch(`https://api.spotify.com/v1/recommendations?seed_artists=${artistId}`, {
+                method: "GET",
+                headers: { "Authorization": "Bearer  " + accessToken }
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    // Store the fetched data in the variable
+                    fetchedData = data.artists.items[0];
+                    console.log(fetchedData);
+                    displayArtist();
+                })
+
+        })
+
+        // Get Access Token
+        document.getElementById("tokenButton").addEventListener("click", function () {
+            fetch("https://accounts.spotify.com/api/token", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+                body: "grant_type=client_credentials&client_id=f217d780b51e4badb7b1ba2da50d14ef&client_secret=b94e6a208af54c54b7877f5fc78fe676",
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log(data)
+                    accessToken = data.access_token;
+                    console.log("Access Token: " + accessToken)
+
+                })
+        })
+
+        function displayArtist() {
+            document.querySelector(".resultsEntry").innerHTML = `
+            <div>
+                <p>Name: ${fetchedData.name}</p>
+                <p>Genres: ${fetchedData.genres}</p>
+                <p>Popularity: ${fetchedData.popularity}</p>  
+                <p>Followers: ${fetchedData.followers.total}</p>
+                <p>Artist ID: ${fetchedData.id}</p> 
+            </div>
+            <img src="${fetchedData.images[0].url}" style="width: 200px; height: 200px;">
+            `
+        }
+
+        function displayArtistSearch() {
+
+        }
+    </script>
+
+</body>
+
+</html>
