@@ -49,11 +49,11 @@
             </form>
         </div>
 
-        <!-- Recommendations by Artist Name Form -->
+        <!-- TopTracks by Artist Name Form -->
         <div>
-            <form id="recommendationsByArtistForm">
-                <label for="recommendationsArtistName">Get Recommendations by Artist Name</label>
-                <input type="text" id="recommendationsArtistName" name="recommendationsArtistName" required>
+            <form id="toptracksByArtistForm">
+                <label for="toptracksArtistName">Get Top Tracks by Artist Name</label>
+                <input type="text" id="toptracksArtistName" name="toptracksArtistName" required>
 
                 <button type="submit">Search</button>
             </form>
@@ -72,8 +72,23 @@
 
     <script>
         let fetchedData = null;
-        let accessToken = "BQD6wmk9jiQ0IibUfeZfyi60uM9BZwEtHhQlEVGo3JixDMcKylNdw4KKFVagZqlLdQhi6_RzD-f6HqWZ-7bnyMnyoaoVsu4vd9S5UyqtffZQASU6y2fIfYuN2nhgJ0VH8UzQfOlifpE"        // Get Artist infos by artist ID
+        let accessToken = "BQDEY3mOjKHl9uEHzsfv0zhGjX0Sdrnk9ftw_ZdlRwZMGwvtdsINlcQC0_yedUc9AMCg-i_s_vwkV5F_7fexl60I6Tjfzm_VO3KmdF2_WjcU0Mma3-A39YAtO_gukWJpw8ZT3oqP7go"
         let artistId = "";
+
+        // Get player infos
+        fetch("https://api.spotify.com/v1/me/player", {
+            method: "GET",
+            headers: { "Authorization": "Bearer  " + accessToken }
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                // Store the fetched data in the variable
+                fetchedData = data;
+                console.log(fetchedData);
+                displayPlayer();
+            })
+
+        
 
         // Get Artist infos by ID
         document.getElementById("artistIdForm").addEventListener("submit", function (event) {
@@ -117,10 +132,10 @@
                 })
         })
 
-        // Get Recommendations by Artist Name
-        document.getElementById("recommendationsByArtistForm").addEventListener("submit", function (event) {
+        // Get Top Tracks by Artist Name
+        document.getElementById("toptracksByArtistForm").addEventListener("submit", function (event) {
             event.preventDefault();
-            let artistName = document.getElementById("recommendationsArtistName").value;
+            let artistName = document.getElementById("toptracksArtistName").value;
 
             // Make results visible
             document.querySelector(".results").style.visibility = "visible";
@@ -136,18 +151,22 @@
                     console.log(fetchedData);
                     artistId = fetchedData.id;
                     console.log(artistId);
-                })
 
-            fetch(`https://api.spotify.com/v1/recommendations?seed_artists=${artistId}`, {
-                method: "GET",
-                headers: { "Authorization": "Bearer  " + accessToken }
-            })
+                    // Fetch top tracks with artistId
+                    return fetch(`https://api.spotify.com/v1/artists/${artistId}/top-tracks`, {
+                        method: "GET",
+                        headers: { "Authorization": "Bearer  " + accessToken }
+                    });
+                })
                 .then((response) => response.json())
                 .then((data) => {
                     // Store the fetched data in the variable
-                    fetchedData = data.artists.items[0];
+                    fetchedData = data;
                     console.log(fetchedData);
-                    displayArtist();
+                    document.querySelector(".resultsEntry").innerHTML = "";
+                    for (let i = 0; i < fetchedData.tracks.length; i++) {
+                        displayTrack(fetchedData.tracks[i]);
+                    }
                 })
 
         })
@@ -175,7 +194,7 @@
             <div>
                 <p>Name: ${fetchedData.name}</p>
                 <p>Genres: ${fetchedData.genres}</p>
-                <p>Popularity: ${fetchedData.popularity}</p>  
+                <p>Popularity: ${fetchedData.popularity}/100</p>  
                 <p>Followers: ${fetchedData.followers.total}</p>
                 <p>Artist ID: ${fetchedData.id}</p> 
             </div>
@@ -183,8 +202,22 @@
             `
         }
 
-        function displayArtistSearch() {
+        function displayTrack(track) {
+            document.querySelector(".resultsEntry").innerHTML += `
+            <div class="singleResult">
+                <p>Name: ${track.name}</p>
+                <p>Album: ${track.album.name}</p>
+                <p>Popularity: ${track.popularity}/100</p>  
+            </div>
+            `
+        }
 
+        function displayPlayer() {
+            document.getElementById("player").innerHTML = `
+            <div>
+            <p>Test</p>
+            </div>
+            `
         }
     </script>
 
