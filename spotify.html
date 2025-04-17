@@ -15,6 +15,7 @@
             <!-- Navigation -->
             <p><a href="index.html">Home</a></p>
             <p><a href="spotify.html">Spotify</a></p>
+            <p><a href="spotify-player.html">Spotify Player</a></p>
         </nav>
     </header>
 
@@ -75,18 +76,7 @@
         let accessToken = "BQDEY3mOjKHl9uEHzsfv0zhGjX0Sdrnk9ftw_ZdlRwZMGwvtdsINlcQC0_yedUc9AMCg-i_s_vwkV5F_7fexl60I6Tjfzm_VO3KmdF2_WjcU0Mma3-A39YAtO_gukWJpw8ZT3oqP7go"
         let artistId = "";
 
-        // Get player infos
-        fetch("https://api.spotify.com/v1/me/player", {
-            method: "GET",
-            headers: { "Authorization": "Bearer  " + accessToken }
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                // Store the fetched data in the variable
-                fetchedData = data;
-                console.log(fetchedData);
-                displayPlayer();
-            })
+       
 
         
 
@@ -212,13 +202,7 @@
             `
         }
 
-        function displayPlayer() {
-            document.getElementById("player").innerHTML = `
-            <div>
-            <p>Test</p>
-            </div>
-            `
-        }
+        
     </script>
 
 </body>

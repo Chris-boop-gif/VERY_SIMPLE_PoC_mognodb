@@ -14,8 +14,8 @@ const client = new MongoClient(uri);
 
 const mongoose = require("mongoose");
 mongoose.connect(uri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
+    //useNewUrlParser: true,
+    //useUnifiedTopology: true,
 })
     .then(() => console.log("Mongoose connected to MongoDB"))
     .catch((err) => console.error("Mongoose connection error:", err));
@@ -35,8 +35,8 @@ main().catch(console.error);
 // Middleware to parse JSON request bodies
 app.use(express.json());
 
-/* // Serve static files from the current directory
-app.use(express.static(path.join(__dirname))); */
+ // Serve static files from the current directory
+app.use(express.static(path.join(__dirname))); 
 
 
 
