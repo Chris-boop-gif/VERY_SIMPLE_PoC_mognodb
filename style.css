@@ -22,6 +22,7 @@ main {
   justify-content: center;
   justify-self: center;
   flex-wrap: wrap;
+  flex-direction: column;
   width: 50%;
   background-color: rgb(121, 162, 201);
   margin-top: 1rem;
@@ -33,7 +34,8 @@ main {
   width: 100%;
   height: 10px;
   display: flex;
- /*  justify-content: space-between; */
+  justify-content: flex-end; 
+/*   align-items: center; */
 }
 
 #progressBar {
@@ -41,20 +43,24 @@ main {
   height: 10px;
   background-color: rgb(70, 72, 75);
   display: flex;
+  
 }
 
 #progress {
   width: 200px;
   height: 10px;
   background-color: rgb(110, 114, 117);
-  justify-self: flex-start;
+ /*  justify-self: flex-start; */
 }
 
 #endTime {
   width: 200px;
   height: 10px;
-  
+}
 
+#playerbuttons {
+  display: flex;
+  justify-content: center;
 }
 
 

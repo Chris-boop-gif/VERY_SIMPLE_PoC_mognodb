@@ -21,29 +21,33 @@
 
     <main>
         <!-- Player -->
-        <button type="button" id="tokenButton">Request Access Token</button>
+        <div class="formBlock"> 
+            <button type="button" id="tokenButton">Request Access Token</button>
+        </div>
 
 
         <!-- <button type="button" id="playerButton">Open Player</button> -->
 
-        <div id="player">
+        <div id="player" class="formBlock">
         </div>
 
         
-            <div id="progressBackground">
-                <span id="playbackTime">0:00</span> 
-                <div id="progressBar">
-                    <span id="progress">            
-                    </span>
-                </div>                
-                <span id="endTime">3:33</span>
-            </div>
+            <!-- <div class="formBlock"> -->
+                <div id="progressBackground">
+                    <span id="playbackTime">0:00</span> 
+                    <div id="progressBar">
+                        <span id="progress">            
+                        </span>
+                    </div>                
+                    <span id="endTime">3:33</span>
+                </div>
+            <!-- </div> -->
         
         
         
 
 
-        <div>
+        <div id="playerbuttons">
             <button type="button" id="previousButton">Previous</button>
             <button type="button" id="playButton">Play</button>
             <button type="button" id="pauseButton">Pause</button>
